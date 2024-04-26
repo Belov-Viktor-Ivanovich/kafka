@@ -7,18 +7,13 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
+public class KafkaProducer {
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
+    private KafkaTemplate<String, String> kafkaTemplate;
 
-public class KafkaProduser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProduser.class);
-
-    private KafkaTemplate<String,String> kafkaTemplate;
-
-    public KafkaProduser(KafkaTemplate<String, String> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
-
-    public void sendMessage(String message) {
-        LOGGER.info(String.format("sendMessage sent %s", message));
-        kafkaTemplate.send("topic2", message);
+    public void sendMessage(String message){
+        kafkaTemplate.send("topic2",message);
+        LOGGER.info(String.format("message send " + message));
     }
 }
